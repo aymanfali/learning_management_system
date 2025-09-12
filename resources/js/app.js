@@ -9,7 +9,6 @@ Alpine.start();
 
 import { createApp } from "vue";
 import TestCase from "./components/TestCase.vue";
-import ExampleComponent from "./components/ExampleComponent.vue";
 
 const app = createApp({
     data() {
@@ -19,7 +18,6 @@ const app = createApp({
     },
 });
 app.component("test-case", TestCase);
-app.component("example-component", ExampleComponent);
 app.mount("#app");
 
 

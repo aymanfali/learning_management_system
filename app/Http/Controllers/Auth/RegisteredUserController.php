@@ -45,7 +45,7 @@ class RegisteredUserController extends Controller
             'role' => $validated['role'],
             'bio' => $validated['role'] === 'instructor' ? $validated['bio'] : null,
             'cv' => $validated['role'] === 'instructor'
-                ? $request->file('cv')->store('cvs', 'public')
+                ? $request->file('cv')->store('instructors/cvs', 'public')
                 : null,
         ]);
 

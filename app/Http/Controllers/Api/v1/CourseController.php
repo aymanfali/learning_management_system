@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -45,8 +46,14 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Course $course)
     {
-        //
+       
+        if ($course->image && Storage::exists($course->image)) {
+            Storage::delete($course->image);
+        }
+
+        $course->delete();
+        return response()->json(['message' => 'Course deleted successfully']);
     }
 }

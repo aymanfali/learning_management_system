@@ -13,7 +13,7 @@
         { key: 'instructor_name', label: 'Instructor', type: 'text' },
         { key: 'created_at', label: 'Created Date', type: 'date' },
         { key: 'updated_at', label: 'Updated Date', type: 'date' }
-    ]" @view="viewCourse" @delete="deleteCourse" />
+    ]" @view="viewCourse" @edit="editCourse" @delete="deleteCourse" />
 
 </template>
 <script>
@@ -38,9 +38,9 @@ export default {
     methods: {
         async fetchCourses() {
             try {
-                const { data } = await axios.get('/api/v1/courses');                
+                const { data } = await axios.get('/api/v1/courses');
                 this.courses = data.data;
-                
+
             } catch (error) {
                 console.error("Failed to fetch courses:", error);
                 this.$toast?.error("Unable to load courses."); // optional if using a toast plugin
@@ -48,6 +48,9 @@ export default {
         },
         viewCourse(course) {
             window.location.href = `/courses/${course.id}`;
+        },
+        editCourse(course) {
+            window.location.href = `/courses/edit/${course.id}`;
         },
         deleteCourse(course) {
             this.courseToDelete = course;

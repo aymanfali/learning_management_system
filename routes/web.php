@@ -23,8 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
     Route::get('/courses', [CourseController::class, 'index'])->name('courses.all');
+    Route::get('/courses/create', [CourseController::class, 'create'])->name('courses.create');
+    Route::post('/courses/store', [CourseController::class, 'store'])->name('courses.store');
+    Route::get('/courses/edit/{id}', [CourseController::class, 'edit'])->name('course.edit');
+    Route::put('/courses/update/{id}', [CourseController::class, 'update'])->name('courses.update');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
-    Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
 });
 
 require __DIR__ . '/auth.php';

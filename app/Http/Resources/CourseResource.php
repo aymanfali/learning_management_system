@@ -18,7 +18,7 @@ class CourseResource extends JsonResource
             'id'              => $this->id,
             'name'            => $this->name,
             'slug'            => $this->slug,
-            'image'           => $this->image ? asset('storage/instructors/' . $this->image) : null,
+            'image'           => $this->image,
             'description'     => $this->description,
             'user_id'         => $this->user_id,
             'instructor_name' => $this->user?->name ?? 'N/A',

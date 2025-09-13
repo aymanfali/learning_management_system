@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CourseController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.all');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.all');
+    Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+    Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
 });
 
 require __DIR__ . '/auth.php';

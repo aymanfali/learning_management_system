@@ -21,6 +21,12 @@
                             {{ __('Users') }}
                         </x-nav-link>
                     @endif
+
+                    @if (Auth::user()->role == 'admin' || Auth::user()->role == 'instructor')
+                        <x-nav-link :href="route('courses.all')" :active="request()->routeIs('courses.all')">
+                            {{ __('Courses') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

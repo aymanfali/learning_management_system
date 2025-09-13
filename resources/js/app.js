@@ -10,6 +10,7 @@ Alpine.start();
 import { createApp } from "vue";
 import TestCase from "./components/TestCase.vue";
 import UsersList from "./components/UsersList.vue";
+import CoursesList from "./components/CoursesList.vue";
 
 
 const app = createApp({
@@ -21,6 +22,7 @@ const app = createApp({
 });
 app.component("test-case", TestCase);
 app.component("users-list", UsersList);
+app.component("courses-list", CoursesList);
 app.mount("#app");
 
 

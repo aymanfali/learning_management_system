@@ -23,13 +23,50 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $roles = ['student', 'instructor'];
+        $role = fake()->randomElement($roles);
+        $major = $role === 'instructor' ? fake()->name() : null;
+        $bio = $role === 'instructor' ? fake()->paragraph() : null;
+        $cv = $role === 'instructor' ? 'cvs/' . fake()->uuid() . '.pdf' : null;
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role'=> $role,
+            'bio' => $bio,
+            'major' => $major,
+            'cv' => $cv,
+            'birthdate' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
         ];
+    }
+
+    /**
+     * State for student user
+     */
+    public function student(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'student',
+            'bio' => null,
+            'cv' => null,
+            'birthdate' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
+        ]);
+    }
+
+    /**
+     * State for instructor user
+     */
+    public function instructor(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'instructor',
+            'major' => fake()->name(),
+            'bio' => fake()->paragraph(),
+            'cv' => 'cvs/' . fake()->uuid() . '.pdf',
+            'birthdate' => fake()->dateTimeBetween('-60 years', '-18 years')->format('Y-m-d'),
+        ]);
     }
 
     /**

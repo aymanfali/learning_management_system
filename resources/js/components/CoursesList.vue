@@ -43,7 +43,7 @@ export default {
 
             } catch (error) {
                 console.error("Failed to fetch courses:", error);
-                this.$toast?.error("Unable to load courses."); // optional if using a toast plugin
+                this.$toast?.error("Unable to load courses."); 
             }
         },
         viewCourse(course) {

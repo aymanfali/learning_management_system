@@ -12,7 +12,12 @@ class CourseController extends Controller
 {
     public function index()
     {
-        $data = Course::with('user')->get();
+        $user = Auth::user();
+
+        $data = $user->role === 'admin'
+            ? Course::with('user')->get()
+            : $user->courses()->with('user')->get();
+
         return view('dashboard.courses.index', compact('data'));
     }
 
@@ -77,8 +82,5 @@ class CourseController extends Controller
         return redirect()->route('courses.all')->with('success', 'Course updated successfully');
     }
 
-    public function destroy($id)
-    {
-       
-    }
+    public function destroy($id) {}
 }

@@ -13,6 +13,11 @@ class Course extends Model
 
     protected $fillable = ['name', 'description', 'image', 'user_id', 'slug'];
 
+    public function lessons()
+    {
+        return $this->hasMany(Lesson::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -32,5 +37,4 @@ class Course extends Model
             $course->slug = $slug;
         });
     }
-    
 }

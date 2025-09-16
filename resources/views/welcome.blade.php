@@ -8,7 +8,7 @@
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col">
 
                         <!-- Course Image -->
-                        <img src="{{ $course->image_url ?? asset('images/default-course.jpg') }}"
+                        <img src="{{ asset('storage/' . $course->image) ?? asset('images/default-course.jpg') }}"
                             alt="{{ $course->name }}" class="w-full h-40 object-cover">
 
                         <!-- Course Info -->
@@ -25,7 +25,7 @@
                             <!-- Author and Date -->
                             <div class="flex items-center justify-between mt-4">
                                 <div class="flex items-center space-x-2">
-                                    <img src="{{ $course->user->image ?? asset('images/default-avatar.png') }}"
+                                    <img src="{{ asset('storage/' . $course->user->image) ?? asset('images/default-avatar.png') }}"
                                         class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 dark:text-gray-300">
                                         {{ $course->user->name }}

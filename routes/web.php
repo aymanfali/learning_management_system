@@ -29,7 +29,13 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
 });
 
-Route::get('/', [HomeController::class,'index'])->name('home');
-Route::get('/courses/{course}', [HomeController::class,'show'])->name('course.show');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/courses/{course}', [HomeController::class, 'show'])->name('course.show');
+
+Route::middleware('auth')->group(function () {
+    Route::post('/courses/{course}/enroll', [HomeController::class, 'enroll'])
+        ->name('courses.enroll');
+});
+
 
 require __DIR__ . '/auth.php';

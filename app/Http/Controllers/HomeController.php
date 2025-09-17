@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assignment;
 use App\Models\Course;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,7 @@ class HomeController extends Controller
 {
     public function index(Course $courses)
     {
-        $courses = $courses->paginate(10);
+        $courses = $courses->paginate(8);
         return view("welcome", ["courses" => $courses]);
     }
 
@@ -75,5 +76,13 @@ class HomeController extends Controller
         ]);
 
         return back()->with('success', 'Assignment submitted successfully!');
+    }
+
+    public function markComplete(Lesson $lesson)
+    {
+        $user = Auth::id();
+        $user->completedLessons()->syncWithoutDetaching([$lesson->id]); // Avoid duplicates
+
+        return back()->with('success', 'Lesson marked as complete!');
     }
 }

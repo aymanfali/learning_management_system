@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/assignments', [HomeController::class, 'assignmentStore'])->name('assignments.store');
+Route::post('/lessons/{lesson}/complete', [HomeController::class, 'markComplete'])->name('lessons.complete');
 
 
 require __DIR__ . '/auth.php';

@@ -31,7 +31,7 @@
                             </span>
                         </div>
                         <!-- Enroll Button -->
-                       
+
                         @if (auth()->check() && auth()->user()->role === 'student' && !$enrolled)
                             <form action="{{ route('courses.enroll', $course->id) }}" method="POST" class="mb-8">
                                 @csrf
@@ -44,7 +44,7 @@
 
 
                         <!-- Lessons -->
-                        
+
                         @if (auth()->check() && auth()->user()->role === 'student' && $enrolled)
 
                             <h2 class="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-4">Lessons</h2>
@@ -67,6 +67,41 @@
                                         <div x-show="openLesson === {{ $index }}" x-collapse
                                             class="px-4 py-3 text-gray-700 dark:text-gray-300">
                                             {{ $lesson->content }}
+
+                                            <!-- Assignment Upload Form -->
+                                            @php
+                                                $submitted = $lesson
+                                                    ->assignment()
+                                                    ->where('user_id', auth()->id())
+                                                    ->first();
+                                            @endphp
+
+                                            @if ($submitted)
+                                                <p class="text-green-600 dark:text-green-400"> Assignment already
+                                                    submitted.</p>
+                                                <a href="{{ asset('storage/' . $submitted->assignment_file) }}"
+                                                    target="_blank" class="text-blue-600 underline">View Submission</a>
+                                            @else
+                                                <!-- Upload Form -->
+                                                <form action="{{ route('assignments.store') }}" method="POST"
+                                                    enctype="multipart/form-data" class="space-y-3">
+                                                    @csrf
+                                                    <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+                                                    <div>
+                                                        <label
+                                                            class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+                                                            Upload Assignment
+                                                        </label>
+                                                        <input type="file" name="assignment_file"
+                                                            class="mt-1 block w-full text-sm text-gray-900 dark:text-gray-100 border rounded-lg cursor-pointer focus:outline-none">
+                                                    </div>
+                                                    <button type="submit"
+                                                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                                                        Submit Assignment
+                                                    </button>
+                                                </form>
+                                            @endif
+
                                         </div>
                                     </div>
                                 @endforeach

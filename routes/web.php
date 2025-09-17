@@ -37,5 +37,7 @@ Route::middleware('auth')->group(function () {
         ->name('courses.enroll');
 });
 
+Route::post('/assignments', [HomeController::class, 'assignmentStore'])->name('assignments.store');
+
 
 require __DIR__ . '/auth.php';

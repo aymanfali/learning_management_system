@@ -21,4 +21,8 @@ class Lesson extends Model
     {
         return $this->belongsTo(Course::class);
     }
+
+    public function assignment(){
+        return $this->hasOne(Assignment::class);
+    }
 }

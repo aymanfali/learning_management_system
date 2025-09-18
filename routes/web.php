@@ -7,7 +7,6 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [CourseController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard.index');

@@ -4,6 +4,7 @@ use App\Http\Controllers\Dashboard\CourseController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [CourseController::class, 'index']);
@@ -27,6 +28,13 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/courses/edit/{id}', [CourseController::class, 'edit'])->name('course.edit');
     Route::put('/courses/update/{id}', [CourseController::class, 'update'])->name('courses.update');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+
+    Route::get('/notifications/{id}/read', function ($id) {
+        $notification = Auth::user()->notifications()->findOrFail($id);
+        $notification->markAsRead();
+
+        return redirect()->back();
+    })->name('notifications.read');
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

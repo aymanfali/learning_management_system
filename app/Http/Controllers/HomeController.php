@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Notifications\CourseCompleted;
+use App\Notifications\StudentEnrolled;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -49,6 +51,11 @@ class HomeController extends Controller
             $course->id => ['enrolled_at' => now()],
         ]);
 
+        $instructor = $course->user;
+        if ($instructor) {
+            $instructor->notify(new StudentEnrolled($student, $course));
+        }
+
         return back()->with('success', "You have successfully enrolled in {$course->title}");
     }
 
@@ -80,8 +87,22 @@ class HomeController extends Controller
 
     public function markComplete(Lesson $lesson)
     {
-        $user = Auth::id();
-        $user->completedLessons()->syncWithoutDetaching([$lesson->id]); // Avoid duplicates
+        $user = Auth::user(); // Get full User model, not just ID
+
+        // Attach lesson to completed lessons without duplicates
+        $user->completedLessons()->syncWithoutDetaching([$lesson->id]);
+
+        // Check if student completed all lessons in the course
+        $course = $lesson->course; // Make sure Lesson has 'course' relationship
+        $totalLessons = $course->lessons()->count();
+        $completedLessons = $user->completedLessons()
+            ->where('course_id', $course->id)
+            ->count();
+        dd($completedLessons, $totalLessons);
+        if ($totalLessons === $completedLessons) {
+            // Notify student about course completion
+            $user->notify(new CourseCompleted($course));
+        }
 
         return back()->with('success', 'Lesson marked as complete!');
     }

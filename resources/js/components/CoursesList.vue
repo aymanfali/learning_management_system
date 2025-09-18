@@ -47,10 +47,10 @@ export default {
             }
         },
         viewCourse(course) {
-            window.location.href = `/courses/${course.id}`;
+            window.location.href = `courses/${course.id}`;
         },
         editCourse(course) {
-            window.location.href = `/courses/edit/${course.id}`;
+            window.location.href = `courses/edit/${course.id}`;
         },
         deleteCourse(course) {
             this.courseToDelete = course;

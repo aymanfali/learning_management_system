@@ -21,6 +21,21 @@
     x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 });
     $watch('darkMode', value => localStorage.setItem('darkMode', value))" class="p-6 lg:p-8 flex flex-col min-h-screen">
 
+    <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" class="fixed bottom-4 right-4">
+        @if (session('success'))
+            <div class="bg-green-500 text-white px-4 py-2 rounded shadow-lg">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="bg-red-500 text-white px-4 py-2 rounded shadow-lg">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
+
+
     <!-- Sticky Header -->
     <header x-data="{ scrolled: false, openMenu: false }" x-init="window.addEventListener('scroll', () => { scrolled = window.scrollY > 10 })" :class="scrolled ? 'shadow-md' : ''"
         class="w-full lg:max-w-6xl mx-auto mb-6 bg-[#FDFDFC] dark:bg-[#0a0a0a] transition-shadow duration-300 sticky top-0 z-50">
@@ -30,7 +45,7 @@
 
                 <!-- Logo / Home -->
                 <a href="{{ url('/') }}" class="text-lg font-semibold hover:underline">
-                    MyApp
+                    {{ config('app.name', 'Laravel') }}
                 </a>
 
                 <!-- Hamburger (mobile) -->
@@ -116,7 +131,7 @@
     <!-- Footer -->
     <footer
         class="w-full lg:max-w-6xl mx-auto mt-12 py-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-600 dark:text-gray-400">
-        &copy; {{ date('Y') }} MyApp. All rights reserved.
+        &copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. All rights reserved.
     </footer>
 
     <!-- Alpine.js for interactivity -->

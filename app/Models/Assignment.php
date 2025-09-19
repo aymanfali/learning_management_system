@@ -6,10 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Assignment extends Model
 {
-    protected $fillable = ['assignment_file', 'user_id', 'lesson_id'];
+    protected $fillable = [
+        'assignment_file',
+        'user_id',
+        'lesson_id',
+        'grade',
+        'feedback',
+        'graded_at',
+    ];
 
-    public function lessons()
+    public function lesson()
     {
         return $this->belongsTo(Lesson::class);
+    }
+
+    public function student()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

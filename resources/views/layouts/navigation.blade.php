@@ -40,6 +40,9 @@
                         <x-nav-link :href="route('courses.all')" :active="request()->routeIs('courses.all')">
                             {{ __('Courses') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('assignments.all')" :active="request()->routeIs('assignments.all')">
+                            {{ __('Assignments') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -258,6 +261,9 @@
             @if (in_array(Auth::user()->role, ['admin', 'instructor']))
                 <x-responsive-nav-link :href="route('courses.all')" :active="request()->routeIs('courses.all')">
                     {{ __('Courses') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('assignments.all')" :active="request()->routeIs('assignments.all')">
+                    {{ __('Assignments') }}
                 </x-responsive-nav-link>
             @endif
         </div>

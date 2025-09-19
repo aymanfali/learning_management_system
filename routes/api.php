@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\v1\AssignmentController;
 use App\Http\Controllers\Api\v1\CourseController;
 use App\Http\Controllers\Api\v1\UserController;
 use Illuminate\Http\Request;
@@ -13,5 +14,6 @@ Route::prefix('v1')->group(
     function () {
         Route::apiResource('users', UserController::class);
         Route::apiResource('courses', CourseController::class);
+        Route::apiResource('assignments', AssignmentController::class);
     }
 );

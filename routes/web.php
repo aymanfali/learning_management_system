@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\AssignmentController;
 use App\Http\Controllers\Dashboard\CourseController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\HomeController;
@@ -27,13 +28,21 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/courses/edit/{id}', [CourseController::class, 'edit'])->name('course.edit');
     Route::put('/courses/update/{id}', [CourseController::class, 'update'])->name('courses.update');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+    
+    Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.all');
+    Route::get('/assignments/edit/{assignment}', [AssignmentController::class, 'edit'])
+        ->name('dashboard.assignments.edit');
+
+    Route::put('/assignments/{assignment}', [AssignmentController::class, 'update'])
+        ->name('dashboard.assignments.update');
 
     Route::get('/notifications/{id}/read', function ($id) {
         $notification = Auth::user()->notifications()->findOrFail($id);
         $notification->markAsRead();
-
+        
         return redirect()->back();
     })->name('notifications.read');
+
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

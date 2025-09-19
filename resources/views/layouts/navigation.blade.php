@@ -26,11 +26,13 @@
 
                 <!-- Navigation Links (Desktop) -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+
 
                     @if (Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+
                         <x-nav-link :href="route('users.all')" :active="request()->routeIs('users.all')">
                             {{ __('Users') }}
                         </x-nav-link>
@@ -167,42 +169,63 @@
                 </x-dropdown>
 
                 <!-- User Dropdown with Avatar -->
-                <x-dropdown align="right" width="56">
-                    <x-slot name="trigger">
-                        <button aria-label="User menu"
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
+                @auth
+                    <!-- User Dropdown -->
+                    <x-dropdown align="right" width="56">
+                        <x-slot name="trigger">
+                            <button aria-label="User menu"
+                                class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
 
-                            <div class="flex items-center space-x-2">
-                                <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}"
-                                    alt="User Avatar"
-                                    class="h-8 w-8 rounded-full object-cover border border-gray-300 dark:border-gray-600">
+                                <div class="flex items-center space-x-2">
+                                    <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : 'https://ui-avatars.com/api/?name=' . urlencode(Auth::user()->name) . '&background=0D8ABC&color=fff' }}"
+                                        alt="User Avatar"
+                                        class="h-8 w-8 rounded-full object-cover border border-gray-300 dark:border-gray-600">
+                                    <span>{{ Auth::user()->name }}</span>
+                                </div>
 
-                                <span>{{ Auth::user()->name }}</span>
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- User Info -->
+                            <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-600">
+                                <div class="font-medium text-base text-gray-800 dark:text-gray-200">
+                                    {{ Auth::user()->name }}
+                                </div>
+                                <div class="font-medium text-sm text-gray-500 dark:text-gray-400">
+                                    {{ Auth::user()->email }}
+                                </div>
+                                <div class="text-xs text-gray-400 dark:text-gray-500 capitalize">
+                                    Role: {{ Auth::user()->role }}
+                                </div>
                             </div>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd"
-                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                        clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
+                            <!-- Links -->
+                            <x-dropdown-link :href="route('profile.edit')">{{ __('Profile') }}</x-dropdown-link>
 
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">{{ __('Profile') }}</x-dropdown-link>
+                            @if (Auth::user()->role !== 'student')
+                                <x-dropdown-link :href="route('dashboard')">{{ __('Dashboard') }}</x-dropdown-link>
+                            @endif
 
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault(); this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
+                            <!-- Logout -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')"
+                                    onclick="event.preventDefault(); this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                @endauth
 
                 <!-- Dark/Light Mode Toggle -->
                 <div @click="$store.theme.toggle()"

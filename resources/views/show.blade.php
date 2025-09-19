@@ -134,6 +134,20 @@
                                         <p class="text-green-600 dark:text-green-400 mt-2">Assignment submitted.</p>
                                         <a href="{{ asset('storage/' . $submitted->assignment_file) }}" target="_blank"
                                             class="text-blue-600 underline">View Submission</a>
+
+                                        @if (!is_null($submitted->grade))
+                                            <div class="mt-2 p-2 bg-green-50 dark:bg-green-900 rounded">
+                                                <p>
+                                                    <span class="font-semibold">Grade:</span> {{ $submitted->grade }}%
+                                                </p>
+                                                @if ($submitted->feedback)
+                                                    <p>
+                                                        <span class="font-semibold">Feedback:</span>
+                                                        {{ $submitted->feedback }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        @endif
                                     @else
                                         <form action="{{ route('assignments.store') }}" method="POST"
                                             enctype="multipart/form-data" class="space-y-3 mt-3">

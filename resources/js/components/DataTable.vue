@@ -29,6 +29,8 @@ export default {
             type: Boolean,
             default: true
         },
+        allowView: { type: Boolean, default: true },
+        allowDelete: { type: Boolean, default: true },
         itemsPerPage: {
             type: Number,
             default: 5
@@ -183,21 +185,31 @@ export default {
                             <template v-else-if="col.type === 'date'">
                                 {{ formatDate(item[col.key]) }}
                             </template>
+                            <template v-else-if="col.type === 'badge'">
+                                <span :class="{
+                                    'bg-green-100 text-green-800 px-2 py-1 rounded': item[col.key] === 'Yes',
+                                    'bg-red-100 text-red-800 px-2 py-1 rounded': item[col.key] === 'No'
+                                }">
+                                    {{ item[col.key] }}
+                                </span>
+                            </template>
                             <template v-else>
                                 {{ item[col.key] }}
                             </template>
+
                         </td>
 
                         <!-- Actions -->
                         <td v-if="showActions" class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                            <button @click="handleView(item)" class="mr-3 cursor-pointer" title="View details">
+                            <button v-if="allowView" @click="handleView(item)" class="mr-3 cursor-pointer"
+                                title="View details">
                                 <span class="material-symbols-rounded"> visibility </span>
                             </button>
                             <button v-if="allowEdit" @click="handleEdit(item)" class="mr-3 cursor-pointer" title="Edit">
                                 <span class="material-symbols-rounded"> edit </span>
                             </button>
-                            <button @click="handleDelete(item)" class="cursor-pointer text-red-600 hover:text-red-900"
-                                title="Delete">
+                            <button v-if="allowDelete" @click="handleDelete(item)"
+                                class="cursor-pointer text-red-600 hover:text-red-900" title="Delete">
                                 <span class="material-symbols-rounded"> delete </span>
                             </button>
                         </td>
@@ -232,7 +244,7 @@ export default {
                     <p class="text-sm">
                         Showing <span class="font-medium">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>
                         to <span class="font-medium">{{ Math.min(currentPage * itemsPerPage, filterItems.length)
-                        }}</span>
+                            }}</span>
                         of <span class="font-medium">{{ filterItems.length }}</span> results
                     </p>
                 </div>

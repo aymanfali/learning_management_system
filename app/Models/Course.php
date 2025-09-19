@@ -23,6 +23,19 @@ class Course extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function assignments()
+    {
+        return $this->hasManyThrough(
+            Assignment::class,   // final model
+            Lesson::class,       // intermediate model
+            'course_id',         // FK on lessons
+            'lesson_id',         // FK on assignments
+            'id',                // PK on courses
+            'id'                 // PK on lessons
+        );
+    }
+
+
     protected static function booted()
     {
         static::creating(function ($course) {

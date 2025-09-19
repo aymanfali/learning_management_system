@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AssignmentResource;
 use App\Models\Assignment;
 use App\Models\Course;
 use App\Notifications\AssignmentGraded;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AssignmentController extends Controller
 {
@@ -15,10 +17,6 @@ class AssignmentController extends Controller
     public function index(Course $course)
     {
         $instructor = Auth::user();
-
-        // if ($instructor->id !== $course->user_id) {
-        //     abort(403, 'Unauthorized');
-        // }
 
         // Get assignments only for courses taught by this instructor
         $assignments = Assignment::with(['student', 'lesson.course'])
@@ -46,9 +44,7 @@ class AssignmentController extends Controller
     // Grade an assignment
     public function update(Request $request, Assignment $assignment)
     {
-        $instructor = Auth::user();
-
-        if ($instructor->id !== $assignment->lesson->course->user_id) {
+        if (Gate::denies('update-assignment', $assignment)) {
             abort(403, 'Unauthorized');
         }
 

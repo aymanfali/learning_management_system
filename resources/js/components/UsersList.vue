@@ -50,11 +50,11 @@ export default {
                 this.users = data;
             } catch (error) {
                 console.error("Failed to fetch users:", error);
-                this.$toast?.error("Unable to load users."); // optional if using a toast plugin
+                this.$toast?.error("Unable to load users.");
             }
         },
         viewUser(user) {
-            window.location.href = `/users/${user.id}`;
+            window.location.href = `users/${user.id}`;
         },
         deleteUser(user) {
             this.userToDelete = user;

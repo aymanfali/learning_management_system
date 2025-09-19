@@ -14,6 +14,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->prefix('dashboard')->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -28,7 +29,7 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/courses/edit/{id}', [CourseController::class, 'edit'])->name('course.edit');
     Route::put('/courses/update/{id}', [CourseController::class, 'update'])->name('courses.update');
     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
-    
+
     Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.all');
     Route::get('/assignments/edit/{assignment}', [AssignmentController::class, 'edit'])
         ->name('dashboard.assignments.edit');
@@ -39,10 +40,9 @@ Route::middleware('auth')->prefix('dashboard')->group(function () {
     Route::get('/notifications/{id}/read', function ($id) {
         $notification = Auth::user()->notifications()->findOrFail($id);
         $notification->markAsRead();
-        
+
         return redirect()->back();
     })->name('notifications.read');
-
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

@@ -7,6 +7,7 @@ use App\Models\Course;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CourseController extends Controller
 {
@@ -77,9 +78,12 @@ class CourseController extends Controller
         return view('dashboard.courses.show', compact('course'));
     }
 
-    public function edit($id)
+    public function edit(Course $course)
     {
-        $course = Course::findOrFail($id);
+        if (Gate::denies('update-course', $course)) {
+            abort(403, 'You are not authorized to update this course.');
+        }
+
         return view('dashboard.courses.edit', compact('course'));
     }
 
@@ -151,5 +155,7 @@ class CourseController extends Controller
     }
 
 
-    public function destroy($id) {}
+    public function destroy($id) {
+        
+    }
 }

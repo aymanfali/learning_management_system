@@ -85,7 +85,7 @@ Get started in 5 minutes:
 1. Clone the repository:
 
 ```bash
-https://github.com/aymanfali/learning_management_system.git
+git clone 'https://github.com/aymanfali/learning_management_system.git'
 
 cd learning_management_system
 

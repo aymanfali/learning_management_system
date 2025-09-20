@@ -11,12 +11,13 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,300,0,-25" />
-
+    
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,100,0,-25" />
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body class="font-sans antialiased">
@@ -31,6 +32,28 @@
                 </div>
             </header>
         @endisset
+
+        <div class="absolute bottom-0 right-0 m-8 z-50 p-5" x-data="{ showNotification: true }" x-init="setTimeout(() => showNotification = false, 5000)">
+            @if (session('success'))
+                <div x-show="showNotification" x-transition
+                    class="bg-green-500 dark:bg-green-600 w-fit text-white px-4 py-2 rounded shadow-lg flex items-center justify-between">
+                    {{ session('success') }}
+                    <button @click="showNotification = false" class="ml-2"
+                        aria-label="Close notification">&times;</button>
+                </div>
+            @endif
+
+            @if (session('error'))
+                <div x-show="showNotification" x-transition
+                    class="bg-red-500 dark:bg-red-600 text-white px-4 py-2 rounded shadow-lg flex items-center justify-between">
+                    {{ session('error') }}
+                    <button @click="showNotification = false" class="ml-2"
+                        aria-label="Close notification">&times;</button>
+                </div>
+            @endif
+        </div>
+
+
 
         <!-- Page Content -->
         <main>

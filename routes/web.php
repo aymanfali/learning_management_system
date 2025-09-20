@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\Dashboard\AssignmentController;
 use App\Http\Controllers\Dashboard\CourseController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -18,9 +19,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth', 'student.restrict', 'instructor.restrict'])->prefix('dashboard')->group(function () {
 
-    Route::get('/', function () {
-        return view('dashboard.index');
-    })->name('dashboard');
+    Route::get('/', [AnalyticsController::class, 'index'])->name('dashboard');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.all');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');

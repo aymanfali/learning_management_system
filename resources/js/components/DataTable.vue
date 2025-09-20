@@ -203,14 +203,14 @@ export default {
                         <td v-if="showActions" class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                             <button v-if="allowView" @click="handleView(item)" class="mr-3 cursor-pointer"
                                 title="View details">
-                                <span class="material-symbols-rounded"> visibility </span>
+                                <span class="material-symbols-outlined"> visibility </span>
                             </button>
                             <button v-if="allowEdit" @click="handleEdit(item)" class="mr-3 cursor-pointer" title="Edit">
-                                <span class="material-symbols-rounded"> edit </span>
+                                <span class="material-symbols-outlined"> edit </span>
                             </button>
                             <button v-if="allowDelete" @click="handleDelete(item)"
                                 class="cursor-pointer text-red-600 hover:text-red-900" title="Delete">
-                                <span class="material-symbols-rounded"> delete </span>
+                                <span class="material-symbols-outlined"> delete </span>
                             </button>
                         </td>
                     </tr>

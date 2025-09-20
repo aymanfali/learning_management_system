@@ -39,7 +39,7 @@ A modern **Learning Management System** built with **Laravel 12** and **Vue 3**,
 -   Error handling, input validation, and logging
 -   Security measures: CSRF, password hashing, validation
 
-### Frontend (Vue.js + Tailwind CSS)
+### Frontend (Blade + Vue.js + Tailwind CSS)
 
 -   Dark/Light mode toggle
 -   Fully responsive design (desktop & mobile)

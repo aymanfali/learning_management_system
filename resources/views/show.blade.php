@@ -114,7 +114,16 @@
                                     class="px-4 py-3 text-gray-700 dark:text-gray-300 transition-all duration-300">
 
                                     {{ $lesson->content }}
-
+                                    <!-- Lesson Document -->
+                                    @if ($lesson->file)
+                                        <div class="mt-3 p-3 bg-gray-100 dark:bg-gray-800 rounded">
+                                            <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mb-1">Related Files:</p>
+                                            <a href="{{ asset('storage/' . $lesson->file) }}" target="_blank"
+                                                class="text-blue-600 dark:text-blue-400 underline">
+                                                View File
+                                            </a>
+                                        </div>
+                                    @endif
                                     <!-- Lesson Mini Progress Bar -->
                                     <div class="mb-3 mt-2">
                                         <div class="flex justify-between mb-1">

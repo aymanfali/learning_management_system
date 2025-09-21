@@ -25,7 +25,7 @@
                                 <canvas id="dailyStatsChart"></canvas>
                             </div>
 
-                            <!-- Weekly Courses -->
+                            <!-- Monthly Courses -->
                             <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-md">
                                 <h3 class="text-lg font-semibold mb-4">Weekly New Courses</h3>
                                 <canvas id="weeklyCoursesChart"></canvas>

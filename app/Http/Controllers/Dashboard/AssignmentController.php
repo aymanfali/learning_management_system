@@ -38,20 +38,15 @@ class AssignmentController extends Controller
 
     public function edit(Assignment $assignment)
     {
-        try {
-            $instructor = Auth::user();
 
-            // Ensure only the course instructor can view
-            if ($instructor->id !== $assignment->lesson->course->user_id) {
-                abort(403, 'Unauthorized');
-            }
+        $instructor = Auth::user();
 
-            return view('dashboard.assignments.edit', compact('assignment'));
-        } catch (\Exception $e) {
-            Log::error('Error loading assignment: ' . $e->getMessage());
-
-            return redirect()->back()->with('error', 'Failed to load assignment. Please try again.');
+        // Ensure only the course instructor can view
+        if ($instructor->id !== $assignment->lesson->course->user_id) {
+            abort(403, 'Unauthorized');
         }
+
+        return view('dashboard.assignments.edit', compact('assignment'));
     }
 
     // Grade an assignment

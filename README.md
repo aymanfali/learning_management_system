@@ -138,9 +138,7 @@ Access the app at `http://localhost:8000`.
 
 ## Usage
 
--   Admin panel: `/admin`
--   Instructor dashboard: `/instructor`
--   Student dashboard: `/student`
+-   Admin panel: `/dahsboard`
 -   Vue components handle dynamic interactions 
 
 ---

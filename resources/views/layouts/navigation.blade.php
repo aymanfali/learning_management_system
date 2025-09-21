@@ -51,6 +51,13 @@
 
             <!-- Settings & Actions (Desktop) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
+
+                <a href="{{ url('/') }}"
+                    class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+                    <span class="material-symbols-outlined mr-2">home</span>
+                    Home
+                </a>
+
                 <!-- Notifications Dropdown -->
                 <x-dropdown align="right" width="80">
                     <x-slot name="trigger">
@@ -244,8 +251,8 @@
                         </svg>
 
                         <!-- Dark Mode Icon -->
-                        <svg x-show="$store.theme.dark" xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-gray-900"
-                            fill="currentColor" viewBox="0 0 20 20">
+                        <svg x-show="$store.theme.dark" xmlns="http://www.w3.org/2000/svg"
+                            class="w-3 h-3 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M17.293 13.293A8 8 0 016.707 2.707a8 8 0 1010.586 10.586z" />
                         </svg>
                     </div>

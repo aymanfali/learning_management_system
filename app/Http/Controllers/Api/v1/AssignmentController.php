@@ -16,8 +16,6 @@ class AssignmentController extends Controller
      */
     public function index()
     {
-        // $user = Auth::user();
-
         $assignments = Assignment::with(['student', 'lesson.course'])->latest()->get();
 
         return AssignmentResource::collection($assignments);

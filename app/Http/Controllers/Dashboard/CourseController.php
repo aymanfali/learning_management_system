@@ -99,17 +99,12 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-        try {
             if (Gate::denies('update-course', $course)) {
                 abort(403, 'You are not authorized to update this course.');
             }
 
             return view('dashboard.courses.edit', compact('course'));
-        } catch (\Exception $e) {
-            Log::error('Error loading course: ' . $e->getMessage());
-
-            return redirect()->back()->with('error', 'Failed to load course. Please try again.');
-        }
+        
     }
 
     public function update(Request $request, $id)

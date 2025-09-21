@@ -59,6 +59,6 @@ class CourseController extends Controller
         }
 
         $course->delete();
-        return response()->json(['message' => 'Course deleted successfully']);
+        return response()->json(['success' => 'Course deleted successfully']);
     }
 }

@@ -31,7 +31,7 @@
 
                             <!-- Course Image with Completed Overlay -->
                             <div class="relative">
-                                <img src="{{ $course->image ? asset('storage/' . $course->image) : asset('images/default-course.jpg') }}"
+                                <img src="{{ $course->image ? asset('storage/' . $course->image) : asset('learning_logo.png') }}"
                                     alt="{{ $course->name }}" class="w-full h-40 object-cover">
 
                                 @if ($isCompleted)
@@ -63,7 +63,7 @@
                                 <!-- Instructor and Date -->
                                 <div class="flex items-center justify-between mt-4">
                                     <div class="flex items-center space-x-2">
-                                        <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('images/default-avatar.png') }}"
+                                        <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('learning_logo.png') }}"
                                             class="w-8 h-8 rounded-full">
                                         <span class="text-sm text-gray-700 dark:text-gray-300">
                                             {{ $course->user->name }}
@@ -102,7 +102,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @forelse($courses->whereNotIn('id', auth()->check() ? auth()->user()->enrolledCourses->pluck('id') : collect()) as $course)
                     <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden flex flex-col">
-                        <img src="{{ $course->image ? asset('storage/' . $course->image) : asset('images/default-course.jpg') }}"
+                        <img src="{{ $course->image ? asset('storage/' . $course->image) : asset('learning_logo.png') }}"
                             alt="{{ $course->name }}" class="w-full h-40 object-cover">
                         <div class="p-4 flex-1 flex flex-col justify-between">
                             <div>
@@ -115,7 +115,7 @@
                             </div>
                             <div class="flex items-center justify-between mt-4">
                                 <div class="flex items-center space-x-2">
-                                    <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('images/default-avatar.png') }}"
+                                    <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('learning_logo.png') }}"
                                         class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 dark:text-gray-300">
                                         {{ $course->user->name }}

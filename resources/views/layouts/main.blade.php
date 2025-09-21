@@ -74,7 +74,7 @@
                             <!-- User Avatar Dropdown -->
                             <div class="relative" x-data="{ open: false }">
                                 <button @click="open = !open" class="flex items-center gap-2 focus:outline-none">
-                                    <img src="{{ asset('storage/' . Auth::user()->image) ?? asset('default-avatar.png') }}"
+                                    <img src="{{ Auth::user()->image ? asset('storage/' . Auth::user()->image) : asset('learning_logo.png') }}"
                                         alt="{{ Auth::user()->name }}"
                                         class="w-8 h-8 rounded-full object-cover border border-gray-300 dark:border-gray-600">
                                     <span

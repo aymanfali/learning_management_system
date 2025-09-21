@@ -59,10 +59,10 @@ class RegisteredUserController extends Controller
         }
 
         event(new Registered($user));
-        Log::info('User Registered successfully.', now());
+        Log::info('User Registered successfully.', ['time' => now()]);
         
         Auth::login($user);
-        Log::info('User logged-in successfully.', now());
+        Log::info('User logged-in successfully.', ['time' => now()]);
 
         return redirect(route('home', absolute: false));
     }

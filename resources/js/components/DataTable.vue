@@ -45,7 +45,8 @@ export default {
     data() {
         return {
             currentPage: 1,
-            filters: {}
+            filters: {},
+            defaultImage: '/learning_logo.png', 
         }
     },
     created() {
@@ -180,6 +181,7 @@ export default {
                         <td v-for="col in headers" :key="col.key" class="px-6 py-4 text-sm text-center">
                             <template v-if="col.type === 'image' && item[col.key]">
                                 <img :src="`/storage/${item[col.key]}`"
+                                    @error="event => event.target.src = defaultImage"
                                     class="h-8 w-8 rounded-full object-cover mx-auto" :alt="`${col.label} image`">
                             </template>
                             <template v-else-if="col.type === 'date'">

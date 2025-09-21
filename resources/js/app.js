@@ -8,10 +8,11 @@ Alpine.start();
 
 
 import { createApp } from "vue";
-import TestCase from "./components/TestCase.vue";
 import UsersList from "./components/UsersList.vue";
 import CoursesList from "./components/CoursesList.vue";
 import AssignmentsList from "./components/AssignmentsList.vue";
+import Toast, { POSITION } from "vue-toastification";
+import "vue-toastification/dist/index.css";
 
 
 const app = createApp({
@@ -21,7 +22,14 @@ const app = createApp({
         };
     },
 });
-app.component("test-case", TestCase);
+
+app.use(Toast, {
+    position: POSITION.BOTTOM_RIGHT,
+    timeout: 5000,
+    closeOnClick: true,
+    pauseOnHover: true,
+});
+
 app.component("users-list", UsersList);
 app.component("courses-list", CoursesList);
 app.component("assignments-list", AssignmentsList);

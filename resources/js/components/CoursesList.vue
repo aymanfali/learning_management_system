@@ -16,62 +16,61 @@
     ]" @view="viewCourse" @edit="editCourse" @delete="deleteCourse" />
 
 </template>
-<script>
+<script setup>
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import DataTable from "./DataTable.vue";
+import ConfirmModal from "./ConfirmModal.vue";
+import { useToast } from "vue-toastification";
 
-import axios from 'axios';
-import DataTable from './DataTable.vue';
-import ConfirmModal from './ConfirmModal.vue';
+const courses = ref([]);
+const showConfirm = ref(false);
+const courseToDelete = ref(null);
+const loading = ref(false);
 
+const toast = useToast();
 
-export default {
-    components: {
-        DataTable,
-        ConfirmModal
-    },
-    data() {
-        return {
-            courses: [],
-            showConfirm: false,
-            courseToDelete: null,
-        }
-    },
-    methods: {
-        async fetchCourses() {
-            try {
-                const { data } = await axios.get('/api/v1/courses');
-                this.courses = data.data;
-
-            } catch (error) {
-                console.error("Failed to fetch courses:", error);
-                this.$toast?.error("Unable to load courses."); 
-            }
-        },
-        viewCourse(course) {
-            window.location.href = `courses/${course.id}`;
-        },
-        editCourse(course) {
-            window.location.href = `courses/edit/${course.id}`;
-        },
-        deleteCourse(course) {
-            this.courseToDelete = course;
-            this.showConfirm = true;
-        },
-        async confirmDelete() {
-            if (!this.courseToDelete) return;
-            try {
-                await axios.delete(`/api/v1/courses/${this.courseToDelete.id}`);
-                this.$toast?.success('course deleted successfully');
-                this.fetchCourses();
-            } catch (error) {
-                this.$toast?.error('Failed to delete course');
-            }
-            this.showConfirm = false;
-            this.courseToDelete = null;
-        }
-    },
-
-    mounted() {
-        this.fetchCourses()
+const fetchCourses = async () => {
+    loading.value = true;
+    try {
+        const { data } = await axios.get("/api/v1/courses");
+        // Assuming API returns { data: [...] }
+        courses.value = data.data;
+    } catch (error) {
+        console.error("Failed to fetch courses:", error);
+        toast.error("Unable to load courses.");
+    } finally {
+        loading.value = false;
     }
-}
+};
+
+const viewCourse = (course) => {
+    window.location.href = `courses/${course.id}`;
+};
+
+const editCourse = (course) => {
+    window.location.href = `courses/edit/${course.id}`;
+};
+
+const deleteCourse = (course) => {
+    courseToDelete.value = course;
+    showConfirm.value = true;
+};
+
+const confirmDelete = async () => {
+    if (!courseToDelete.value) return;
+    try {
+        await axios.delete(`/api/v1/courses/${courseToDelete.value.id}`);
+        courses.value = courses.value.filter(
+            (c) => c.id !== courseToDelete.value.id
+        );
+        toast.success("Course deleted successfully");
+    } catch (error) {
+        toast.error("Failed to delete course");
+    }
+    showConfirm.value = false;
+    courseToDelete.value = null;
+};
+
+onMounted(fetchCourses);
 </script>

@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg p-6">
 
                 <!-- Course Image -->
-                <img src="{{ $course->image ? asset('storage/' . $course->image) : asset('favicon.icon') }}"
+                <img src="{{ $course->image ? asset('storage/' . $course->image) : asset('learning_logo.png') }}"
                     alt="Course image for {{ $course->name }}" class="w-full h-64 object-cover rounded-lg mb-6"
                     loading="lazy">
 
@@ -26,7 +26,7 @@
                 <!-- Author & Date -->
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center space-x-2">
-                        <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('images/default-avatar.png') }}"
+                        <img src="{{ $course->user->image ? asset('storage/' . $course->user->image) : asset('learning_logo.png') }}"
                             alt="Instructor {{ $course->user->name }}" class="w-10 h-10 rounded-full" loading="lazy">
                         <span class="text-gray-800 dark:text-gray-200">{{ $course->user->name }}</span>
                     </div>

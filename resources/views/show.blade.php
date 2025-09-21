@@ -114,7 +114,6 @@
                                     class="px-4 py-3 text-gray-700 dark:text-gray-300 transition-all duration-300">
 
                                     {{ $lesson->content }}
-
                                     <!-- Lesson Document -->
                                     @if ($lesson->file)
                                         <div class="mt-3 p-3 bg-gray-100 dark:bg-gray-800 rounded">
@@ -125,7 +124,6 @@
                                             </a>
                                         </div>
                                     @endif
-                                    
                                     <!-- Lesson Mini Progress Bar -->
                                     <div class="mb-3 mt-2">
                                         <div class="flex justify-between mb-1">

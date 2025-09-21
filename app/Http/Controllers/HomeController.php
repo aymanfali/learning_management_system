@@ -120,7 +120,6 @@ class HomeController extends Controller
             $completedLessons = $user->completedLessons()
                 ->where('course_id', $course->id)
                 ->count();
-            dd($completedLessons, $totalLessons);
             if ($totalLessons === $completedLessons) {
                 // Notify student about course completion
                 $user->notify(new CourseCompleted($course));

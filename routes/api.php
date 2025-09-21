@@ -10,10 +10,8 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::prefix('v1')->group(
-    function () {
-        Route::apiResource('users', UserController::class);
-        Route::apiResource('courses', CourseController::class);
-        Route::apiResource('assignments', AssignmentController::class);
-    }
-);
+Route::prefix('v1')->group(function () {
+    Route::apiResource('users', UserController::class)->only(['index', 'destroy']);
+    Route::apiResource('courses', CourseController::class)->only(['index', 'destroy']);
+    Route::apiResource('assignments', AssignmentController::class)->only(['index']);
+});

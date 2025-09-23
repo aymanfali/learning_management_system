@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\CourseController as GuestCourseController;
 use App\Http\Controllers\Dashboard\AssignmentController;
 use App\Http\Controllers\Dashboard\CourseController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -57,6 +58,13 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/assignments', [HomeController::class, 'assignmentStore'])->name('assignments.store');
 Route::post('/lessons/{lesson}/complete', [HomeController::class, 'markComplete'])->name('lessons.complete');
+
+
+Route::get('/courses', [GuestCourseController::class, 'index'])->name('courses.list');
+
+Route::get('/about', function () {
+    return view('about');
+});
 
 
 require __DIR__ . '/auth.php';

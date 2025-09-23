@@ -46,7 +46,7 @@ export default {
         return {
             currentPage: 1,
             filters: {},
-            defaultImage: '/learning_logo.png', 
+            defaultImage: '/learning_logo.png',
         }
     },
     created() {
@@ -203,18 +203,30 @@ export default {
 
                         <!-- Actions -->
                         <td v-if="showActions" class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
-                            <button v-if="allowView" @click="handleView(item)" class="mr-3 cursor-pointer"
-                                title="View details">
-                                <span class="material-symbols-outlined"> visibility </span>
-                            </button>
-                            <button v-if="allowEdit" @click="handleEdit(item)" class="mr-3 cursor-pointer" title="Edit">
-                                <span class="material-symbols-outlined"> edit </span>
-                            </button>
-                            <button v-if="allowDelete" @click="handleDelete(item)"
-                                class="cursor-pointer text-red-600 hover:text-red-900" title="Delete">
-                                <span class="material-symbols-outlined"> delete </span>
-                            </button>
+                            <div class="flex justify-center space-x-4">
+                                <!-- View Button -->
+                                <button v-if="allowView" type="button" @click="handleView(item)"
+                                    class="p-2" title="View details"
+                                    aria-label="View details">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <!-- Edit Button -->
+                                <button v-if="allowEdit" type="button" @click="handleEdit(item)"
+                                    class="p-2 rounded text-blue-600 transition" title="Edit"
+                                    aria-label="Edit">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+
+                                <!-- Delete Button -->
+                                <button v-if="allowDelete" type="button" @click="handleDelete(item)"
+                                    class="p-2 rounded text-red-600 transition" title="Delete"
+                                    aria-label="Delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </td>
+
                     </tr>
 
                     <!-- Empty state -->

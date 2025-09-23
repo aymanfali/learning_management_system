@@ -1,52 +1,18 @@
-<nav x-data="{ open: false }" class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-    <!-- Alpine Store for Dark Mode -->
-    <script>
-        document.addEventListener('alpine:init', () => {
-            Alpine.store('theme', {
-                dark: localStorage.getItem('theme') === 'dark',
-                toggle() {
-                    this.dark = !this.dark;
-                    localStorage.setItem('theme', this.dark ? 'dark' : 'light');
-                    document.documentElement.classList.toggle('dark', this.dark);
-                }
-            });
-        });
-    </script>
+<nav x-data="{ open: false }"
+    class="bg-[#2D82B7] border-b border-white/20 dark:bg-[#07004D] text-white dark:text-[#F3DFBF]">
 
     <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+                        {{ config('app.name') }}
                     </a>
                 </div>
 
-                <!-- Navigation Links (Desktop) -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
 
-
-                    @if (Auth::user()->role === 'admin')
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-
-                        <x-nav-link :href="route('users.all')" :active="request()->routeIs('users.all')">
-                            {{ __('Users') }}
-                        </x-nav-link>
-                    @endif
-
-                    @if (in_array(Auth::user()->role, ['admin', 'instructor']))
-                        <x-nav-link :href="route('courses.all')" :active="request()->routeIs('courses.all')">
-                            {{ __('Courses') }}
-                        </x-nav-link>
-                        <x-nav-link :href="route('assignments.all')" :active="request()->routeIs('assignments.all')">
-                            {{ __('Assignments') }}
-                        </x-nav-link>
-                    @endif
-                </div>
             </div>
 
             <!-- Settings & Actions (Desktop) -->
@@ -54,8 +20,8 @@
 
                 <a href="{{ url('/') }}"
                     class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-                    <span class="material-symbols-outlined mr-2">home</span>
-                    Home
+                    <i class="fa-solid fa-globe me-3"></i>
+                    Visit Website
                 </a>
 
                 <!-- Notifications Dropdown -->
@@ -65,11 +31,7 @@
                             class="relative inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150">
 
                             <!-- Bell Icon -->
-                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 17h5l-1.405-1.405C18.79 15.21 18 13.7 18 12V8a6 6 0 10-12 0v4c0 1.7-.79 3.21-1.595 3.595L3 17h5m7 0a3 3 0 11-6 0h6z" />
-                            </svg>
+                            <i class="fa-solid fa-bell"></i>
 
                             <!-- Red Badge -->
                             @if (auth()->user()->unreadNotifications->count() > 0)
@@ -251,8 +213,8 @@
                         </svg>
 
                         <!-- Dark Mode Icon -->
-                        <svg x-show="$store.theme.dark" xmlns="http://www.w3.org/2000/svg"
-                            class="w-3 h-3 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+                        <svg x-show="$store.theme.dark" xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 text-gray-900"
+                            fill="currentColor" viewBox="0 0 20 20">
                             <path d="M17.293 13.293A8 8 0 016.707 2.707a8 8 0 1010.586 10.586z" />
                         </svg>
                     </div>
@@ -333,11 +295,20 @@
 </nav>
 
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 <script>
-    // Immediately set dark/light mode before anything renders
-    if (localStorage.getItem('theme') === 'dark') {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
-    }
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('theme', {
+            dark: localStorage.getItem('theme') === 'dark',
+
+            toggle() {
+                this.dark = !this.dark;
+                localStorage.setItem('theme', this.dark ? 'dark' : 'light');
+                document.documentElement.classList.toggle('dark', this.dark);
+            }
+        });
+
+        // Ensure correct mode on first load
+        document.documentElement.classList.toggle('dark', Alpine.store('theme').dark);
+    });
 </script>

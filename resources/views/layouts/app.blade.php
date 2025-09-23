@@ -12,9 +12,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,100,0,-25" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -22,46 +22,101 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body class="font-sans antialiased">
+<body x-data="{ sidebarOpen: false }" class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+
         @include('layouts.navigation')
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-        <div class="absolute bottom-0 right-0 m-8 z-50 p-5" x-data="{ showNotification: true }" x-init="setTimeout(() => showNotification = false, 5000)">
-            @if (session('success'))
-                <div x-show="showNotification" x-transition
-                    class="bg-green-500 dark:bg-green-600 w-fit text-white px-4 py-2 rounded shadow-lg flex items-center justify-between">
-                    {{ session('success') }}
-                    <button @click="showNotification = false" class="ml-2"
-                        aria-label="Close notification">&times;</button>
-                </div>
-            @endif
-
-            @if (session('error'))
-                <div x-show="showNotification" x-transition
-                    class="bg-red-500 dark:bg-red-600 text-white px-4 py-2 rounded shadow-lg flex items-center justify-between">
-                    {{ session('error') }}
-                    <button @click="showNotification = false" class="ml-2"
-                        aria-label="Close notification">&times;</button>
-                </div>
-            @endif
-        </div>
-
-
-
         <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+        <div class="flex w-full">
+
+            <!-- Sidebar -->
+            <aside :class="sidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+                class="fixed sm:static inset-y-0 left-0 w-64 bg-[#2D82B7] dark:bg-[#07004D] text-white dark:text-[#F3DFBF] transform transition-transform duration-300 z-30 sm:translate-x-0">
+                <div class="p-4 text-2xl font-bold">Dashboard</div>
+                <nav class="mt-6 flex flex-col space-y-1 px-2">
+                    @if (Auth::user()->role === 'admin')
+                        <a href="{{ route('users.all') }}"
+                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('users.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}">Users</a>
+                    @endif
+                    @if (in_array(Auth::user()->role, ['admin', 'instructor']))
+                        <a href="{{ route('courses.all') }}"
+                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('courses.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}">Courses</a>
+                        <a href="{{ route('assignments.all') }}"
+                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('assignments.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}">Assignments</a>
+                    @endif
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-1 p-6">
+                @isset($header)
+                    <header class="bg-white dark:bg-gray-800 shadow rounded mb-6">
+                        <div class="mx-auto py-4 px-6 sm:px-6 lg:px-8">
+                            {{ $header }}
+                        </div>
+                    </header>
+                @endisset
+
+                <!-- Notifications -->
+                <div class="fixed bottom-4 right-4 z-50 space-y-2">
+                    @if (session('success'))
+                        <div x-data="{ show: true }" x-show="show" x-transition.duration.500ms role="alert"
+                            class="bg-green-500 dark:bg-green-600 text-white px-4 py-2 rounded shadow-lg flex items-center justify-between">
+                            {{ session('success') }}
+                            <button @click="show=false" class="ml-2 text-xl font-bold">&times;</button>
+                        </div>
+                    @endif
+                    @if (session('error'))
+                        <div x-data="{ show: true }" x-show="show" x-transition.duration.500ms role="alert"
+                            class="bg-red-500 dark:bg-red-600 text-white px-4 py-2 rounded shadow-lg flex items-center justify-between">
+                            {{ session('error') }}
+                            <button @click="show=false" class="ml-2 text-xl font-bold">&times;</button>
+                        </div>
+                    @endif
+                </div>
+
+                {{ $slot }}
+            </main>
+        </div>
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/js/all.min.js"
+        integrity="sha512-6BTOlkauINO65nLhXhthZMtepgJSghyimIalb+crKRPhvhmsCdnIuGcVbR5/aQY2A+260iC1OPy1oCdB6pSSwQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
+
+    <script>
+        import EditorJS from '@editorjs/editorjs';
+        import Header from '@editorjs/header';
+        import List from '@editorjs/list';
+
+        const editor = new EditorJS({
+            /** 
+             * Id of Element that should contain the Editor 
+             */
+            holder: 'editorjs',
+
+            /** 
+             * Available Tools list. 
+             * Pass Tool's class or Settings object for each Tool you want to use 
+             */
+            tools: {
+                header: {
+                    class: Header,
+                    inlineToolbar: ['link']
+                },
+                list: {
+                    class: List,
+                    inlineToolbar: true
+                }
+            },
+        })
+    </script>
 </body>
+
 
 </html>

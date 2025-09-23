@@ -23,6 +23,12 @@ class Course extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function enrollments()
+    {
+        return $this->hasMany(Enrollment::class);
+    }
+
+
     public function assignments()
     {
         return $this->hasManyThrough(

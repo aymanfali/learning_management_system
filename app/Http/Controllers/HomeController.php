@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Assignment;
 use App\Models\Course;
 use App\Models\Lesson;
+use App\Models\User;
 use App\Notifications\CourseCompleted;
 use App\Notifications\StudentEnrolled;
 use Illuminate\Http\Request;
@@ -17,10 +18,31 @@ class HomeController extends Controller
     {
         try {
             $courses = $courses->paginate(8);
-            return view("welcome", ["courses" => $courses]);
+
+            // Popular courses based on enrollments
+            $popularCourses = Course::withCount('enrollments')
+                ->orderByDesc('enrollments_count')
+                ->take(5)
+                ->get();
+
+            $instructors = User::where('role', 'instructor')
+                ->with(['courses' => function ($query) {
+                    $query->withCount('enrollments'); // count enrollments for each course
+                }])
+                ->get()
+                ->map(function ($instructor) {
+                    // sum all enrollments of this instructor's courses
+                    $instructor->total_enrollments = $instructor->courses->sum('enrollments_count');
+                    return $instructor;
+                })
+                ->sortByDesc('total_enrollments') // order by total enrollments
+                ->take(5);
+
+            // Pass data to the view
+            return view('home', compact('courses', 'popularCourses', 'instructors'));
         } catch (\Exception $e) {
             Log::error('Error loading courses: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Failed to load dashboard courses.');
+            return redirect()->back()->with('error', 'Failed to load courses.');
         }
     }
 

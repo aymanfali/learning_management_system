@@ -68,16 +68,17 @@ A modern **Learning Management System** built with **Laravel 12** and **Vue 3**,
 
 ## Screenshots
 
+
 **Admin Dashboard**
-<img width="1373" height="840" alt="image" src="https://github.com/user-attachments/assets/6b4cfcf0-579b-46fd-b6a0-c695d160326f" />
+<img width="1890" height="871" alt="image" src="https://github.com/user-attachments/assets/8cf03bf8-baf7-4740-b5fb-e42635de4d0e" />
 
 
 **Instructor Dashboard**
-<img width="1400" height="805" alt="image" src="https://github.com/user-attachments/assets/5d0d2f5f-2042-4496-a90d-e8411fbed288" />
+<img width="1885" height="847" alt="image" src="https://github.com/user-attachments/assets/1d82a8d9-c321-4c5a-b2e3-df30d378a076" />
 
 
-**Student View**
-<img width="1380" height="850" alt="image" src="https://github.com/user-attachments/assets/385e13f2-a060-4933-9abf-e1ad9de04124" />
+**Home Page**
+<img width="1892" height="867" alt="image" src="https://github.com/user-attachments/assets/54666f94-c599-420a-aad7-50160940c55d" />
 
 ---
 

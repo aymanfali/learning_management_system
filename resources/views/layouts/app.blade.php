@@ -36,14 +36,20 @@
                 <div class="p-4 text-2xl font-bold">Dashboard</div>
                 <nav class="mt-6 flex flex-col space-y-1 px-2">
                     @if (Auth::user()->role === 'admin')
+                        <a href="{{ route('dashboard') }}"
+                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('dashboard') ? 'bg-blue-700 dark:bg-blue-800' : '' }}"><i
+                                class="fa-solid fa-house me-3"></i>Home</a>
                         <a href="{{ route('users.all') }}"
-                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('users.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}">Users</a>
+                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('users.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}"><i
+                                class="fa-solid fa-users me-3"></i>Users</a>
                     @endif
                     @if (in_array(Auth::user()->role, ['admin', 'instructor']))
                         <a href="{{ route('courses.all') }}"
-                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('courses.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}">Courses</a>
+                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('courses.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}"><i
+                                class="fa-solid fa-graduation-cap me-3"></i>Courses</a>
                         <a href="{{ route('assignments.all') }}"
-                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('assignments.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}">Assignments</a>
+                            class="block px-4 py-2 rounded hover:bg-blue-600 dark:hover:bg-blue-700 {{ request()->routeIs('assignments.all') ? 'bg-blue-700 dark:bg-blue-800' : '' }}"><i
+                                class="fa-solid fa-spell-check me-3"></i>Assignments</a>
                     @endif
                 </nav>
             </aside>
@@ -85,37 +91,6 @@
         integrity="sha512-6BTOlkauINO65nLhXhthZMtepgJSghyimIalb+crKRPhvhmsCdnIuGcVbR5/aQY2A+260iC1OPy1oCdB6pSSwQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@latest"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@latest"></script>
-
-    <script>
-        import EditorJS from '@editorjs/editorjs';
-        import Header from '@editorjs/header';
-        import List from '@editorjs/list';
-
-        const editor = new EditorJS({
-            /** 
-             * Id of Element that should contain the Editor 
-             */
-            holder: 'editorjs',
-
-            /** 
-             * Available Tools list. 
-             * Pass Tool's class or Settings object for each Tool you want to use 
-             */
-            tools: {
-                header: {
-                    class: Header,
-                    inlineToolbar: ['link']
-                },
-                list: {
-                    class: List,
-                    inlineToolbar: true
-                }
-            },
-        })
-    </script>
 </body>
 
 

@@ -7,7 +7,7 @@
                 style="background: linear-gradient(135deg, #2D82B7, #42E2B8);">
                 <div class="py-20 px-6">
                     <h1 class="text-4xl sm:text-5xl font-extrabold text-white mb-4 drop-shadow-lg">
-                        Welcome to <span class="font-mono">Learn</span>
+                        Welcome to <span class="font-mono">'Learn'</span>
                     </h1>
                     <p class="text-lg sm:text-xl mb-6 max-w-2xl mx-auto text-white/90">
                         Discover new skills, track your progress, and complete courses at your own pace.
